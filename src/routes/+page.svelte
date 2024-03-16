@@ -2,7 +2,7 @@
     import Clock from "./Clock.svelte";
 </script>
 
-<main class="wrapper">
+<div class="page">
     <Clock></Clock>
 
     <div class="controls">
@@ -12,6 +12,6 @@
     <div class="select-task">
         <button class="button"> Select a task </button>
     </div>
-</main>
+</div>
 
 <style></style>

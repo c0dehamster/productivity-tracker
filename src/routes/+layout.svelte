@@ -20,7 +20,9 @@
 >
     <Header></Header>
 
-    <slot />
+    <main class="wrapper">
+        <slot />
+    </main>
 </div>
 
 <style>
@@ -36,13 +38,24 @@
         background-size: cover;
     }
 
+    .wrapper {
+        padding-inline: 2rem;
+    }
+
     @media screen and (width > 40rem) {
         .app {
             background-image: var(--background-pattern-tablet);
         }
+
+        .wrapper {
+            padding-inline: 4rem;
+        }
     }
 
     @media screen and (width > 64rem) {
+        .wrapper {
+            padding-inline: 8rem;
+        }
         .app {
             background-image: var(--background-pattern-desktop);
         }
