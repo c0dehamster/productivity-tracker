@@ -78,10 +78,9 @@
         top: 50%;
         left: 50%;
 
-        background-color: rgba(0, 0, 0, 0.1);
         background: radial-gradient(
             closest-side at center,
-            rgba(0, 0, 0, 0) calc(100% - 1rem),
+            rgba(0, 0, 0, 0) calc(100% - 2rem),
             rgba(0, 0, 0, 0.05)
         );
     }
@@ -104,9 +103,8 @@
     }
 
     .clock__ring {
+        border-radius: 50%;
         aspect-ratio: 1;
-
-        box-shadow: 0.25rem 0.25rem 2rem 0.25rem rgba(0, 0, 0, 0.1);
 
         clip-path: url(#maskMobile);
     }
@@ -114,10 +112,30 @@
     @media screen and (width > 40rem) {
         .clock {
             max-width: 60vh;
+
+            padding-inline: 2rem;
+        }
+
+        .clock__face::before {
+            width: 80%;
         }
 
         .clock__ring {
             clip-path: url(#maskTablet);
+        }
+    }
+
+    @media screen and (width > 64rem) {
+        .clock__face::before {
+            display: none;
+        }
+
+        .hand {
+            height: 53%;
+            top: -3%;
+        }
+        .clock__ring {
+            clip-path: none;
         }
     }
 </style>
