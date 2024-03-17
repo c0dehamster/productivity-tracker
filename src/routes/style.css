@@ -120,6 +120,24 @@ a {
     color: inherit;
 }
 
+button {
+    position: relative;
+    isolation: isolate;
+
+    min-width: fit-content;
+
+    border: none;
+    outline: none;
+    border-radius: 0rem;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--color-primary-400);
+    background-color: transparent;
+}
+
 /* Utilities */
 
 /* Invisible element */
@@ -138,28 +156,6 @@ a {
     position: absolute;
     white-space: nowrap;
     width: 1px;
-}
-
-.button {
-    position: relative;
-    isolation: isolate;
-
-    min-width: fit-content;
-
-    border: none;
-    outline: none;
-    border-radius: 0rem;
-
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-
-    color: var(--color-primary-400);
-    background-color: transparent;
-}
-
-.button--naked {
-    background-color: transparent;
 }
 
 .glass {
