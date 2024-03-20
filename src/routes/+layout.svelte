@@ -1,10 +1,10 @@
 <script lang="ts">
-    import "./style.css";
+    import "./style.css"
 
-    import backgroundPatternMobile from "../lib/images/bg_pattern_mobile.svg";
-    import backgroundPatternTablet from "../lib/images/bg_pattern_tablet.svg";
-    import backgroundPatternDesktop from "../lib/images/bg_pattern_desktop.svg";
-    import Header from "$lib/components/Header.svelte";
+    import backgroundPatternMobile from "../lib/images/bg_pattern_mobile.svg"
+    import backgroundPatternTablet from "../lib/images/bg_pattern_tablet.svg"
+    import backgroundPatternDesktop from "../lib/images/bg_pattern_desktop.svg"
+    import Header from "$lib/components/Header.svelte"
 </script>
 
 <svelte:head>
@@ -18,7 +18,9 @@
         --background-pattern-tablet: url({backgroundPatternTablet});
         --background-pattern-desktop: url({backgroundPatternDesktop});"
 >
-    <Header></Header>
+    <div class="header">
+        <Header></Header>
+    </div>
 
     <main class="wrapper">
         <slot />
@@ -32,14 +34,25 @@
         min-height: 100vh;
         width: 100%;
 
+        display: grid;
+        grid-template-rows: auto 1fr;
+
         background-image: var(--background-pattern-mobile);
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
     }
 
+    .header {
+        grid-row: 1 / 2;
+        grid-column: 1 / 2;
+    }
+
     .wrapper {
-        padding-inline: 2rem;
+        grid-row: 1 / 3;
+        grid-column: 1 / 2;
+
+        display: grid;
     }
 
     @media screen and (width > 40rem) {
@@ -48,14 +61,13 @@
         }
 
         .wrapper {
-            padding-inline: 4rem;
         }
     }
 
     @media screen and (width > 64rem) {
         .wrapper {
-            padding-inline: 8rem;
         }
+
         .app {
             background-image: var(--background-pattern-desktop);
         }
