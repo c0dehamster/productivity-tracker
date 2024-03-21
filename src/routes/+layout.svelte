@@ -35,7 +35,6 @@
         width: 100%;
 
         display: grid;
-        grid-template-rows: auto 1fr;
 
         background-image: var(--background-pattern-mobile);
         background-repeat: no-repeat;
@@ -44,14 +43,13 @@
     }
 
     .header {
-        grid-row: 1 / 2;
-        grid-column: 1 / 2;
+        position: fixed;
+        z-index: 100;
+        inset-inline: 0;
+        inset-block-start: 0;
     }
 
     .wrapper {
-        grid-row: 1 / 3;
-        grid-column: 1 / 2;
-
         display: grid;
     }
 
@@ -59,15 +57,9 @@
         .app {
             background-image: var(--background-pattern-tablet);
         }
-
-        .wrapper {
-        }
     }
 
     @media screen and (width > 64rem) {
-        .wrapper {
-        }
-
         .app {
             background-image: var(--background-pattern-desktop);
         }
