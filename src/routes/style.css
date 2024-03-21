@@ -159,7 +159,18 @@ button {
 }
 
 .glass {
+    position: relative;
+    isolation: isolate;
+}
+
+.glass::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+
     background-color: var(--color-neutral-100);
+
     backdrop-filter: blur(0.25rem);
 }
 

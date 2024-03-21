@@ -79,6 +79,10 @@
         left: 50%;
     }
 
+    .clock__face::before {
+        border-radius: 50%;
+    }
+
     /* Digits */
 
     .clock__digits {
