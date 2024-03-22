@@ -10,19 +10,23 @@
     <label for="new-task-name" class="sr-only">New task name</label>
 
     <div class="expandable">
-        <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="10"
-            class="expandable__description"
-            placeholder="Add task description (optional)"
-        ></textarea>
-    </div>
+        <div class="expandable__buffer">
+            <div class="expandable__contents">
+                <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="10"
+                    class="expandable__description"
+                    placeholder="Add task description (optional)"
+                ></textarea>
 
-    <div class="form__controls">
-        <button class="form__button"> Cancel </button>
-        <button class="glass form__button"> Submit </button>
+                <div class="form__controls">
+                    <button class="form__button"> Cancel </button>
+                    <button class="glass form__button"> Submit </button>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 
@@ -31,7 +35,6 @@
         padding: 1.5rem;
 
         display: grid;
-        gap: 1.5rem;
     }
 
     .form__name {
@@ -43,8 +46,35 @@
         font-size: var(--font-size-300);
     }
 
+    .expandable {
+        display: grid;
+        grid-template-rows: 0fr;
+
+        transition: grid-template-rows 200ms ease-out;
+    }
+
+    .form:hover > .expandable,
+    .form:focus-within > .expandable {
+        grid-template-rows: 1fr;
+    }
+
+    .expandable__buffer {
+        overflow: hidden;
+    }
+
+    .expandable__contents {
+        padding-top: 1.5rem;
+
+        display: grid;
+        gap: 1.5rem;
+
+        overflow: hidden;
+    }
+
     .expandable__description {
         padding: 1rem;
+
+        resize: none;
 
         border: 1px solid var(--color-primary-200);
 
@@ -67,8 +97,6 @@
         .form {
             padding-block: 2.5rem;
             padding-inline: 4rem;
-
-            gap: 2.5rem;
         }
 
         .form__name {
@@ -76,6 +104,12 @@
             padding-inline: 1.5rem;
 
             font-size: var(--font-size-400);
+        }
+
+        .expandable__contents {
+            padding-top: 2.5rem;
+
+            gap: 2.5rem;
         }
 
         .expandable__description {
@@ -94,7 +128,15 @@
 
     @media screen and (width > 64rem) {
         .form__name {
+            height: 3rem;
+            padding-inline: 2rem;
+
             font-size: var(--font-size-500);
+        }
+
+        .expandable__description {
+            padding-inline: 2rem;
+            padding-block: 1.5rem;
         }
     }
 </style>

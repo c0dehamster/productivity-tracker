@@ -22,7 +22,9 @@
     .page {
         padding-block: 6.75rem;
         padding-inline: 2rem;
-        display: grid;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
         gap: 2rem;
     }
 
