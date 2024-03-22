@@ -32,14 +32,10 @@
         position: relative;
 
         min-height: 100vh;
-        width: 100%;
+
+        width: 100vw;
 
         display: grid;
-
-        background-image: var(--background-pattern-mobile);
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
     }
 
     .header {
@@ -51,16 +47,21 @@
 
     .wrapper {
         display: grid;
+
+        background-image: var(--background-pattern-mobile);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
     }
 
     @media screen and (width > 40rem) {
-        .app {
+        .wrapper {
             background-image: var(--background-pattern-tablet);
         }
     }
 
     @media screen and (width > 64rem) {
-        .app {
+        .wrapper {
             background-image: var(--background-pattern-desktop);
         }
     }
