@@ -58,7 +58,7 @@
         align-items: center;
 
         padding-inline: 1.5rem;
-        padding-block-start: 1rem;
+        padding-block-start: 1.5rem;
     }
 
     /* Dividing line */
@@ -98,7 +98,7 @@
     .task-tile__expandable {
         grid-area: expandable;
 
-        padding-block-end: 1rem;
+        padding-block-end: 1.5rem;
 
         display: grid;
         gap: 1.5rem;
@@ -116,8 +116,6 @@
 
     .controls__button {
         height: 2rem;
-
-        box-shadow: 0.25rem 0.25rem 2rem 0.25rem rgba(0, 0, 0, 0.1);
     }
 
     .controls__icon {
@@ -182,6 +180,8 @@
         }
 
         .controls__button--give-up {
+            padding-inline: 2rem;
+
             font-size: var(--font-size-400);
         }
     }

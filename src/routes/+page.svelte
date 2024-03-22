@@ -59,8 +59,6 @@
 
         grid-row: 2 / 4;
 
-        box-shadow: 0.25rem 0.25rem 2rem 0.25rem rgba(0, 0, 0, 0.1);
-
         font-size: var(--font-size-500);
     }
 
@@ -116,8 +114,6 @@
     .controls__finished {
         height: 3rem;
         padding-inline: 2rem;
-
-        box-shadow: 0.25rem 0.25rem 2rem 0.25rem rgba(0, 0, 0, 0.1);
 
         font-size: var(--font-size-500);
     }

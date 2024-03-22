@@ -1,9 +1,9 @@
 <script lang="ts">
-    import iconMenu from "../images/icon_menu.svg";
-    import iconClose from "../images/icon_close.svg";
-    import iconSettings from "../images/icon_settings.svg";
+    import iconMenu from "../images/icon_menu.svg"
+    import iconClose from "../images/icon_close.svg"
+    import iconSettings from "../images/icon_settings.svg"
 
-    import { navigationData } from "$lib/utils/navigationData";
+    import { navigationData } from "$lib/utils/navigationData"
 </script>
 
 <header class="header glass">
@@ -46,8 +46,6 @@
 
         display: grid;
         row-gap: 1rem;
-
-        box-shadow: 0.25rem 0.25rem 2rem 0.25rem rgba(0, 0, 0, 0.1);
     }
 
     .header__icons {
