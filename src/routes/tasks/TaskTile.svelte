@@ -4,9 +4,14 @@
     import iconExpand from "$lib/images/icon_expand.svg"
     import iconEdit from "$lib/images/icon_edit.svg"
     import iconDelete from "$lib/images/icon_delete.svg"
-    import iconClose from "$lib/images/icon_close.svg"
 
     export let task: Task
+
+    let expanded = false
+
+    const toggleExpanded = () => (expanded = !expanded)
+
+    $: detailsClass = expanded ? "details details--expanded" : "details"
 </script>
 
 <div class="glass task-tile">
@@ -16,31 +21,33 @@
         <span class="sr-only">Mark as completed</span>
     </label>
 
-    <p class="task-tile__name">
+    <button class="task-tile__name" on:click={toggleExpanded}>
         {task.name}
-    </p>
+    </button>
 
-    <button class="expand">
+    <button class="expand" on:click={toggleExpanded}>
         <img src={iconExpand} alt="expand" class="expand__icon" />
     </button>
 
-    <div class="task-tile__expandable">
-        <p class="task-tile__description">
-            {task.description}
-        </p>
+    <div class={detailsClass}>
+        <div class="details__expandable">
+            <p class="details__description">
+                {task.description}
+            </p>
 
-        <div class="controls">
-            <button class="glass controls__button controls__button--give-up"
-                >Give up</button
-            >
+            <div class="controls">
+                <button class="glass controls__button controls__button--give-up"
+                    >Give up</button
+                >
 
-            <button class="glass controls__button controls__button--edit">
-                <img src={iconEdit} alt="edit" class="controls__icon" />
-            </button>
+                <button class="glass controls__button controls__button--edit">
+                    <img src={iconEdit} alt="edit" class="controls__icon" />
+                </button>
 
-            <button class="glass controls__button controls__button--delete">
-                <img src={iconDelete} alt="delete" class="controls__icon" />
-            </button>
+                <button class="glass controls__button controls__button--delete">
+                    <img src={iconDelete} alt="delete" class="controls__icon" />
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -52,7 +59,7 @@
         grid-template-areas:
             "checkbox expand"
             "name name"
-            "expandable expandable";
+            "details details";
         row-gap: 1.5rem;
         column-gap: 1rem;
         align-items: center;
@@ -77,10 +84,12 @@
 
     .task-tile__name {
         grid-area: name;
+        justify-self: start;
 
         font-size: var(--font-size-300);
 
         text-wrap: balance;
+        text-align: start;
     }
 
     .expand {
@@ -95,16 +104,28 @@
 
     /* Expandable */
 
-    .task-tile__expandable {
-        grid-area: expandable;
-
-        padding-block-end: 1.5rem;
+    .details {
+        grid-area: details;
 
         display: grid;
-        gap: 1.5rem;
+        /* Collapsed state. Transition does not work with height, therefore grid rows hack */
+        grid-template-rows: 0fr;
+
+        transition: grid-template-rows 200ms ease-out;
     }
 
-    .task-tile__description {
+    .details--expanded {
+        grid-template-rows: 1fr;
+    }
+
+    .details__expandable {
+        display: grid;
+        gap: 1.5rem;
+
+        overflow: hidden;
+    }
+
+    .details__description {
         font-size: var(--font-size-100);
     }
 
@@ -112,6 +133,10 @@
         display: grid;
         grid-template-columns: 1fr auto auto;
         gap: 1.5rem;
+
+        /* Workaround for the padding preventing the details from hiding completely */
+
+        padding-block-end: 1.5rem;
     }
 
     .controls__button {
@@ -144,7 +169,7 @@
             grid-template-columns: 1.5rem 1fr 2rem;
             grid-template-areas:
                 "checkbox name expand"
-                ". expandable .";
+                ". details .";
             row-gap: 2rem;
             column-gap: 1.5rem;
         }
@@ -161,18 +186,18 @@
             width: 2rem;
         }
 
-        .task-tile__expandable {
-            padding-block-end: 2rem;
-
+        .details__expandable {
             gap: 2rem;
         }
 
-        .task-tile__description {
+        .details__description {
             font-size: var(--font-size-300);
         }
 
         .controls {
             gap: 2rem;
+
+            padding-block-end: 2rem;
         }
 
         .controls__button {
@@ -209,9 +234,12 @@
             width: 3rem;
         }
 
-        .task-tile__expandable {
-            padding-block-end: 2.5rem;
+        .details__expandable {
             gap: 3rem;
+        }
+
+        .controls {
+            padding-block-end: 2.5rem;
         }
     }
 </style>
