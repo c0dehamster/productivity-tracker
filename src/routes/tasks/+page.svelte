@@ -26,11 +26,6 @@
         gap: 2rem;
     }
 
-    .form {
-        /* Temporary */
-        display: none;
-    }
-
     .tasks-list {
         box-shadow: 0.25rem 0.25rem 2rem 0.25rem rgba(0, 0, 0, 0.1);
     }
