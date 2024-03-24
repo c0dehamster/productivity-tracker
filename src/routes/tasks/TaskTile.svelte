@@ -66,6 +66,8 @@
 
         padding-inline: 1.5rem;
         padding-block-start: 1.5rem;
+
+        box-shadow: none;
     }
 
     /* Dividing line */

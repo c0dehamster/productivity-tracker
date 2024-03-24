@@ -11,7 +11,7 @@ export const placeholderData: Array<Task> = [
         id: "task2",
         name: "Nunc pretium risus elit, et facilisis dui tempor id",
         description: "Donec ornare odio nec turpis placerat, in commodo sapien sagittis. Ut condimentum neque ac lacus fringilla, et suscipit dolor egestas. Sed commodo, ex sollicitudin molestie porttitor, risus turpis rhoncus mi, gravida lacinia diam erat vel nunc. Maecenas hendrerit pharetra ligula, nec auctor ex. Nulla vitae molestie turpis, id tincidunt odio. Sed vitae vestibulum elit. Phasellus felis tortor, mollis sed vulputate a, tincidunt sed odio.",
-        completed: false
+        completed: true
     },    {
         id: "task3",
         name: "Suspendisse id mauris ligula. Nunc hendrerit ex felis",
