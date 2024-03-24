@@ -16,11 +16,6 @@ ol[role="list"] {
     list-style: none;
 }
 
-html {
-    width: 100vw;
-    overflow-x: hidden;
-}
-
 /* Set core root defaults */
 html:focus-within {
     scroll-behavior: smooth;

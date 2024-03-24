@@ -28,12 +28,12 @@
 </div>
 
 <style>
+    /* TODO: fix the scrollbar issue */
     .app {
         position: relative;
 
         min-height: 100vh;
-
-        width: 100vw;
+        width: 100%;
 
         display: grid;
     }
