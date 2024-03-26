@@ -14,12 +14,12 @@
             <p class="timespan__legend">Show for</p>
 
             <div class="timespan__options">
-                <label for="day" class="glass timespan__label">
+                <label for="day" class="glass-button timespan__label">
                     <input type="radio" class="hidden" id="day" value="day" />
                     Day
                 </label>
 
-                <label for="week" class="glass timespan__label">
+                <label for="week" class="glass-button timespan__label">
                     <input
                         type="radio"
                         class="hidden"
@@ -29,7 +29,7 @@
                     Week
                 </label>
 
-                <label for="month" class="glass timespan__label">
+                <label for="month" class="glass-button timespan__label">
                     <input
                         type="radio"
                         class="hidden"
@@ -39,7 +39,7 @@
                     Month
                 </label>
 
-                <label for="year" class="glass timespan__label">
+                <label for="year" class="glass-button timespan__label">
                     <input type="radio" class="hidden" id="year" value="year" />
                     Year
                 </label>
