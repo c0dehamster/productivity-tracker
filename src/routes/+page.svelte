@@ -1,5 +1,11 @@
 <script lang="ts">
     import Clock from "./Clock.svelte"
+
+    import { timerStore } from "./timer"
+
+    let duration = 30 // For testing, 30 seconds
+
+    const onStart = () => timerStore.runTimer(duration)
 </script>
 
 <div class="page">
@@ -11,7 +17,9 @@
         <button class="select-task__button"> Select a task </button>
     </div>
 
-    <button class="glass start-button"> Start! </button>
+    <button class="glass-button start-button" on:click={onStart}>
+        Start!
+    </button>
 
     <div class="active-task">
         <p class="active-task__label">Working on...</p>
