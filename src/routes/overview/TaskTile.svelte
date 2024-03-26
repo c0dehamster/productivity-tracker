@@ -167,9 +167,9 @@
     @media screen and (width > 64rem) {
         .task {
             padding-block: 2rem;
-            padding-inline: 6rem;
+            padding-inline: 4rem;
 
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 3fr 2fr;
             grid-template-areas: "name details";
         }
 

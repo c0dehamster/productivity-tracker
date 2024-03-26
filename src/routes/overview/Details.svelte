@@ -36,9 +36,9 @@
         display: none;
 
         padding-block: 2rem;
-        padding-inline: 6rem;
+        padding-inline: 4rem;
 
-        grid-template-columns: 4fr 1fr 1fr;
+        grid-template-columns: 3fr 1fr 1fr;
         align-items: center;
 
         font-size: var(--font-size-500);
