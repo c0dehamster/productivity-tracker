@@ -1,8 +1,19 @@
 <script lang="ts">
     import pointer from "$lib/images/pointer.svg"
+    import { timeLeft, timerStore } from "./timer"
+
+    $: pointerAngle =
+        $timerStore?.status === "active"
+            ? ($timeLeft * 360) / $timerStore.duration
+            : 57
 </script>
 
-<div class="clock" style="--pointer: url({pointer});">
+<div
+    class="clock"
+    style="
+        --pointer: url({pointer});
+        --pointer-angle: {pointerAngle}deg"
+>
     <div class="glass clock__face"></div>
 
     <div class="clock__digits">
@@ -140,7 +151,7 @@
 
         transform-origin: 50% 44cqw;
 
-        transform: translateX(-50%) rotate(57deg);
+        transform: translateX(-50%) rotate(var(--pointer-angle));
         left: 50%;
         top: 6cqw;
 
@@ -193,7 +204,7 @@
             left: 50%;
 
             transform-origin: 50% 100%;
-            transform: translateX(-50%) rotate(57deg);
+            transform: translateX(-50%) rotate(var(--pointer-angle));
 
             background-image: var(--pointer);
             background-repeat: no-repeat;

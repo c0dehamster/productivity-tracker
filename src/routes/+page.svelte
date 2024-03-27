@@ -1,14 +1,27 @@
 <script lang="ts">
     import Clock from "./Clock.svelte"
+    import CompleteModal from "./CompleteModal.svelte"
 
     import { timerStore } from "./timer"
 
-    let duration = 30 // For testing, 30 seconds
+    let duration = 12 // For testing, 12 seconds
+
+    let isModalShown = false
 
     const onStart = () => timerStore.runTimer(duration)
+    const onBreak = () => timerStore.reset() // TODO: implement a proper break
+    const onClose = () => timerStore.reset()
+
+    $: {
+        isModalShown = $timerStore?.status === "elapsed" ? true : false
+        console.log($timerStore?.status) // For testing
+    }
 </script>
 
 <div class="page">
+    <CompleteModal durationMinutes={30} on:break={onBreak} on:close={onClose}
+    ></CompleteModal>
+
     <div class="clock">
         <Clock></Clock>
     </div>
@@ -156,7 +169,7 @@
             grid-column: 1 / 2;
 
             font-size: var(--font-size-300);
-            height: 2rem;
+            height: 2.5rem;
         }
 
         /* Active state */

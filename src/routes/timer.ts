@@ -1,19 +1,31 @@
 import type { Task } from "$lib/types/task"
-import { writable } from "svelte/store"
+import { derived, writable } from "svelte/store"
+
+type TimerStatus = "idle" | "active" | "elapsed" | "failed"
 
 interface Timer {
     timestamp: number
     duration: number
     timeElapsed: number
-    status: "idle" | "active" | "elapsed" | "failed"
+    status: TimerStatus
     task: {
         name: string
         id: string
     } | null
 }
 
-const createTimerStore = () => {
-    const { set, update, subscribe } = writable<Timer>()
+// TODO: move the defaults to a more appropriate location
+
+const defaultTimer: Timer = {
+    timestamp: 0,
+    duration: 1800,
+    timeElapsed: 0,
+    status: "idle",
+    task: null,
+}
+
+const createTimerStore = (timer: Timer) => {
+    const { set, update, subscribe } = writable(timer)
 
     const runTimer = (duration: number, task?: Task) => {
         /* Initialize the timer */
@@ -35,28 +47,24 @@ const createTimerStore = () => {
         const onElapsed = () => {
             clearInterval(timerLoop)
 
-            update((store) => {
-                // For testing
-                console.log(store.status)
-
-                return {
-                    ...store,
-                    status: "elapsed",
-                }
-            })
-
             // TODO: add the task handler
         }
 
         timerLoop = setInterval(() => {
             update((store) => {
-                if (store.timeElapsed === store.duration) onElapsed()
+                let status: TimerStatus = "active"
+
+                if (store.timeElapsed === store.duration) {
+                    onElapsed()
+                    status = "elapsed"
+                }
 
                 // For testing
                 console.log(store.timeElapsed)
 
                 return {
                     ...store,
+                    status,
                     timeElapsed: store.timeElapsed + 1,
                 }
             })
@@ -95,4 +103,8 @@ const createTimerStore = () => {
     }
 }
 
-export const timerStore = createTimerStore()
+export const timerStore = createTimerStore(defaultTimer)
+
+export const timeLeft = derived(timerStore, ($timerStore) => {
+    return $timerStore.duration - $timerStore.timeElapsed
+})
