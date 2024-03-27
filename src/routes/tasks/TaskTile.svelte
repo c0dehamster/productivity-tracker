@@ -37,7 +37,7 @@
 
             <div class="controls">
                 <button class="glass controls__button controls__button--give-up"
-                    >Give up</button
+                    >Suspend</button
                 >
 
                 <button class="glass controls__button controls__button--edit">
