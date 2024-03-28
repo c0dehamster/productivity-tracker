@@ -15,38 +15,51 @@
 </script>
 
 <div class="glass task-tile">
-    <input type="checkbox" class="hidden" id={task.id} />
+    <div class="task-tile__header">
+        <input type="checkbox" class="hidden" id={task.id} />
 
-    <label for={task.id} class="task-tile__checkbox">
-        <span class="sr-only">Mark as completed</span>
-    </label>
+        <label for={task.id} class="task-tile__checkbox">
+            <span class="sr-only">Mark as completed</span>
+        </label>
 
-    <button class="task-tile__name" on:click={toggleExpanded}>
-        {task.name}
-    </button>
+        <button class="task-tile__name" on:click={toggleExpanded}>
+            {task.name}
+        </button>
 
-    <button class="expand" on:click={toggleExpanded}>
-        <img src={iconExpand} alt="expand" class="expand__icon" />
-    </button>
+        <button class="expand" on:click={toggleExpanded}>
+            <img src={iconExpand} alt="expand" class="expand__icon" />
+        </button>
+    </div>
 
     <div class={detailsClass}>
-        <div class="details__expandable">
-            <p class="details__description">
-                {task.description}
-            </p>
+        <div class="details__buffer">
+            <div class="details__contents">
+                <p class="details__description">
+                    {task.description}
+                </p>
 
-            <div class="controls">
-                <button class="glass controls__button controls__button--give-up"
-                    >Suspend</button
-                >
+                <div class="controls">
+                    <button
+                        class="glass controls__button controls__button--give-up"
+                        >Suspend</button
+                    >
 
-                <button class="glass controls__button controls__button--edit">
-                    <img src={iconEdit} alt="edit" class="controls__icon" />
-                </button>
+                    <button
+                        class="glass controls__button controls__button--edit"
+                    >
+                        <img src={iconEdit} alt="edit" class="controls__icon" />
+                    </button>
 
-                <button class="glass controls__button controls__button--delete">
-                    <img src={iconDelete} alt="delete" class="controls__icon" />
-                </button>
+                    <button
+                        class="glass controls__button controls__button--delete"
+                    >
+                        <img
+                            src={iconDelete}
+                            alt="delete"
+                            class="controls__icon"
+                        />
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -55,19 +68,27 @@
 <style>
     .task-tile {
         display: grid;
+
+        align-items: center;
+
+        box-shadow: none;
+
+        /* Workaround: by moving the padding into the children, I prevent shadows from clipping */
+        --_padding-block: 1.5rem;
+        --_padding-inline: 1.5rem;
+    }
+
+    .task-tile__header {
+        padding-block: var(--_padding-block);
+        padding-inline: var(--_padding-inline);
+
+        display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
             "checkbox expand"
-            "name name"
-            "details details";
-        row-gap: 1.5rem;
-        column-gap: 1rem;
+            "name name";
         align-items: center;
-
-        padding-inline: 1.5rem;
-        padding-block-start: 1.5rem;
-
-        box-shadow: none;
+        gap: 1.5rem;
     }
 
     /* Dividing line */
@@ -107,8 +128,6 @@
     /* Expandable */
 
     .details {
-        grid-area: details;
-
         display: grid;
         /* Collapsed state. Transition does not work with height, therefore grid rows hack */
         grid-template-rows: 0fr;
@@ -120,11 +139,16 @@
         grid-template-rows: 1fr;
     }
 
-    .details__expandable {
+    .details__buffer {
+        overflow: hidden;
+    }
+
+    .details__contents {
+        padding-inline: var(--_padding-inline);
+        padding-block-end: var(--_padding-block);
+
         display: grid;
         gap: 1.5rem;
-
-        overflow: hidden;
     }
 
     .details__description {
@@ -137,8 +161,6 @@
         gap: 1.5rem;
 
         /* Workaround for the padding preventing the details from hiding completely */
-
-        padding-block-end: 1.5rem;
     }
 
     .controls__button {
@@ -165,15 +187,13 @@
 
     @media screen and (width > 40rem) {
         .task-tile {
-            padding-inline: 2.5rem;
-            padding-block-start: 2rem;
+            --_padding-block: 2rem;
+            --_padding-inline: 2.5rem;
+        }
 
-            grid-template-columns: 1.5rem 1fr 2rem;
-            grid-template-areas:
-                "checkbox name expand"
-                ". details .";
-            row-gap: 2rem;
-            column-gap: 1.5rem;
+        .task-tile__header {
+            grid-template-columns: auto 1fr auto;
+            grid-template-areas: "checkbox name expand";
         }
 
         .task-tile__checkbox {
@@ -188,7 +208,11 @@
             width: 2rem;
         }
 
-        .details__expandable {
+        /* Expandable */
+
+        .details__contents {
+            padding-inline-start: 5.5rem;
+            padding-inline-end: 6rem;
             gap: 2rem;
         }
 
@@ -198,8 +222,6 @@
 
         .controls {
             gap: 2rem;
-
-            padding-block-end: 2rem;
         }
 
         .controls__button {
@@ -215,13 +237,12 @@
 
     @media screen and (width > 64rem) {
         .task-tile {
-            padding-block-start: 2.5rem;
-            padding-inline: 3rem;
+            --_padding-block: 2.5rem;
+            --_padding-inline: 3rem;
+        }
 
-            grid-template-columns: 2rem 1fr 3rem;
-
-            row-gap: 2.5rem;
-            column-gap: 3rem;
+        .task-tile__header {
+            gap: 3rem;
         }
 
         .task-tile__checkbox {
@@ -236,12 +257,10 @@
             width: 3rem;
         }
 
-        .details__expandable {
+        .details__contents {
+            padding-inline-start: 8rem;
+            padding-inline-end: 9rem;
             gap: 3rem;
-        }
-
-        .controls {
-            padding-block-end: 2.5rem;
         }
     }
 </style>
