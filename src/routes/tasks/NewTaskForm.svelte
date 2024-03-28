@@ -1,29 +1,74 @@
-<script lang="ts"></script>
+<script lang="ts">
+    import { tasksStore } from "./tasks"
+
+    let name = ""
+    let description = ""
+
+    const resetFields = () => {
+        name = ""
+        description = ""
+    }
+
+    const onSubmit = () => {
+        tasksStore.addTask(name, description !== "" ? description : null)
+
+        resetFields()
+    }
+
+    const onCancel = () => resetFields()
+
+    $: isFormActive = name !== "" || description !== ""
+
+    $: {
+        console.log($tasksStore)
+    }
+</script>
 
 <form class="form">
-    <input
-        type="text"
-        class="form__name"
-        placeholder="Add new task"
-        id="new-task-name"
-    />
-    <label for="new-task-name" class="sr-only">New task name</label>
+    <!-- TODO: limit the size of the inputs -->
+    <div class="form__input-wrapper">
+        <input
+            type="text"
+            class="form__name {name !== '' ? 'form__name--active' : ''}"
+            placeholder="Add new task"
+            id="new-task-name"
+            autocomplete="off"
+            bind:value={name}
+        />
+        <label for="new-task-name" class="sr-only">New task name</label>
+    </div>
 
-    <div class="expandable">
+    <div class="expandable {isFormActive ? 'expandable--active' : ''}">
         <div class="expandable__buffer">
             <div class="expandable__contents">
                 <textarea
-                    name=""
-                    id=""
+                    name="description"
+                    id="description"
                     cols="30"
                     rows="10"
-                    class="expandable__description"
+                    class="expandable__description {description !== ''
+                        ? 'expandable__description--active'
+                        : ''}"
                     placeholder="Add task description (optional)"
+                    bind:value={description}
                 ></textarea>
 
                 <div class="form__controls">
-                    <button class="form__button"> Cancel </button>
-                    <button class="glass form__button"> Submit </button>
+                    <button
+                        class="form__button"
+                        type="button"
+                        on:click={onCancel}
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        class="glass-button form__button"
+                        type="button"
+                        on:click={onSubmit}
+                    >
+                        Submit
+                    </button>
                 </div>
             </div>
         </div>
@@ -32,18 +77,11 @@
 
 <style>
     .form {
-        padding: 1.5rem;
-
         display: grid;
     }
 
-    .form__name {
-        height: 2rem;
-        padding-inline: 1rem;
-
-        border-bottom: 1px solid var(--color-primary-200);
-
-        font-size: var(--font-size-300);
+    .form__input-wrapper {
+        padding: 1.5rem;
     }
 
     .expandable {
@@ -54,7 +92,8 @@
     }
 
     .form:hover > .expandable,
-    .form:focus-within > .expandable {
+    .form:focus-within > .expandable,
+    .expandable--active {
         grid-template-rows: 1fr;
     }
 
@@ -63,12 +102,35 @@
     }
 
     .expandable__contents {
-        padding-top: 1.5rem;
+        padding-block-end: 1.5rem;
+        padding-inline: 1.5rem;
 
         display: grid;
         gap: 1.5rem;
 
         overflow: hidden;
+    }
+
+    /* Inputs */
+
+    .form__name {
+        height: 2rem;
+        padding-inline: 1rem;
+
+        border-bottom: 1px solid var(--color-primary-200);
+
+        font-size: var(--font-size-300);
+    }
+
+    .form__name:hover,
+    .expandable__description:hover {
+        border-color: var(--color-primary-400);
+    }
+
+    .form__name--active,
+    .expandable__description--active {
+        border-color: var(--color-primary-400);
+        color: var(--color-primary-400);
     }
 
     .expandable__description {
@@ -80,6 +142,8 @@
 
         font-size: var(--font-size-100);
     }
+
+    /* Controls */
 
     .form__controls {
         justify-self: end;
@@ -94,7 +158,7 @@
     }
 
     @media screen and (width > 40rem) {
-        .form {
+        .form__input-wrapper {
             padding-block: 2.5rem;
             padding-inline: 4rem;
         }
@@ -107,7 +171,8 @@
         }
 
         .expandable__contents {
-            padding-top: 2.5rem;
+            padding-block-end: 2.5rem;
+            padding-inline: 4rem;
 
             gap: 2.5rem;
         }
