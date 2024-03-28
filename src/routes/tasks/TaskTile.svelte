@@ -4,14 +4,25 @@
     import iconExpand from "$lib/images/icon_expand.svg"
     import iconEdit from "$lib/images/icon_edit.svg"
     import iconDelete from "$lib/images/icon_delete.svg"
+    import { createEventDispatcher } from "svelte"
 
     export let task: Task
+
+    const dispatch = createEventDispatcher()
 
     let expanded = false
 
     const toggleExpanded = () => (expanded = !expanded)
 
-    $: detailsClass = expanded ? "details details--expanded" : "details"
+    const toggleActive = () => {
+        if (task.status === "active") {
+            dispatch("suspend", task.id)
+        } else {
+            dispatch("resume", task.id)
+        }
+    }
+    const onEdit = () => dispatch("edit", task.id)
+    const onDelete = () => dispatch("delete", task.id)
 </script>
 
 <div class="glass task-tile">
@@ -31,7 +42,7 @@
         </button>
     </div>
 
-    <div class={detailsClass}>
+    <div class="details {expanded ? 'details--expanded' : ''}">
         <div class="details__buffer">
             <div class="details__contents">
                 <p class="details__description">
@@ -41,17 +52,25 @@
                 <div class="controls">
                     <button
                         class="glass controls__button controls__button--give-up"
-                        >Suspend</button
+                        on:click={toggleActive}
                     >
+                        {#if task.status === "active"}
+                            <span>Suspend</span>
+                        {:else if task.status === "suspended"}
+                            <span>Resume</span>
+                        {/if}
+                    </button>
 
                     <button
                         class="glass controls__button controls__button--edit"
+                        on:click={onEdit}
                     >
                         <img src={iconEdit} alt="edit" class="controls__icon" />
                     </button>
 
                     <button
                         class="glass controls__button controls__button--delete"
+                        on:click={onDelete}
                     >
                         <img
                             src={iconDelete}

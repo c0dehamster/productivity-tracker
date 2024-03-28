@@ -1,7 +1,15 @@
 <script lang="ts">
     import { placeholderData } from "$lib/utils/placeholderData"
+
     import NewTaskForm from "./NewTaskForm.svelte"
     import TaskTile from "./TaskTile.svelte"
+    import { tasksStore } from "./tasks"
+
+    const suspendTask = (id: string) =>
+        tasksStore.toggleCompleted(id, "suspended")
+    const resumeTask = (id: string) => tasksStore.toggleCompleted(id, "active")
+
+    $: tasksToDisplay = $tasksStore.length > 0 ? $tasksStore : placeholderData
 </script>
 
 <div class="page">
@@ -10,9 +18,14 @@
     </div>
 
     <ul class="tasks-list">
-        {#if placeholderData.length > 0}
-            {#each placeholderData as task}
-                <TaskTile {task}></TaskTile>
+        {#if tasksToDisplay.length > 0}
+            {#each tasksToDisplay as task}
+                <TaskTile
+                    {task}
+                    on:suspend={(e) => suspendTask(e.detail)}
+                    on:resume={(e) => resumeTask(e.detail)}
+                    on:delete={(e) => tasksStore.deleteTask(e.detail)}
+                ></TaskTile>
             {/each}
         {/if}
     </ul>
