@@ -4,12 +4,24 @@
     let name = ""
     let description = ""
 
+    let isError = false
+
     const resetFields = () => {
         name = ""
         description = ""
+        isError = false
+    }
+
+    const onInput = () => {
+        if (name !== "") isError = false
     }
 
     const onSubmit = () => {
+        if (name === "") {
+            isError = true
+            return
+        }
+
         tasksStore.addTask(name, description !== "" ? description : null)
 
         resetFields()
@@ -34,8 +46,12 @@
             id="new-task-name"
             autocomplete="off"
             bind:value={name}
+            on:input={onInput}
         />
         <label for="new-task-name" class="sr-only">New task name</label>
+        <p class="error-message {isError ? 'error-message--active' : ''}">
+            Please enter a task name
+        </p>
     </div>
 
     <div class="expandable {isFormActive ? 'expandable--active' : ''}">
@@ -82,6 +98,20 @@
 
     .form__input-wrapper {
         padding: 1.5rem;
+
+        display: grid;
+        gap: 1rem;
+    }
+
+    .error-message {
+        display: none;
+
+        font-size: var(--font-size-100);
+        text-align: end;
+    }
+
+    .error-message--active {
+        display: block;
     }
 
     .expandable {
@@ -168,6 +198,10 @@
             padding-inline: 1.5rem;
 
             font-size: var(--font-size-400);
+        }
+
+        .error-message {
+            font-size: var(--font-size-300);
         }
 
         .expandable__contents {
